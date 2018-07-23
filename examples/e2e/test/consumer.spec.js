@@ -3,6 +3,7 @@ const chai = require('chai')
 const chaiAsPromised = require('chai-as-promised')
 const expect = chai.expect
 const { Pact, Matchers } = require('../../../dist/pact');
+const { eachLike, like, term, iso8601DateTimeWithMillis } = Matchers;
 const MOCK_SERVER_PORT = 1234
 const LOG_LEVEL = process.env.LOG_LEVEL || 'WARN'
 
@@ -216,7 +217,10 @@ describe('Pact', () => {
         withRequest: {
           method: 'POST',
           body: animal,
-          path: term({ generate: '/animals', matcher: '/animals' })
+          path: term({ generate: '/animals', matcher: '/animals' }),
+          headers: {
+            'Content-Type': 'application/json; charset=utf-8',
+          },
         },
         willRespondWith: {
           status: 200,

@@ -105,18 +105,24 @@ const animal = {
 }
 
 server.post('/suggestions', (req, res) => {
+  console.log("suggestions:", res)
   if (!req.body) {
     res.writeHead(400)
     res.end()
   }
-  request.post(`${API_HOST}/animals`).set('Content-Type', 'application/json; charset=utf-8').send(animal).end((res) => {
-    if (res.status === 200) {
-      res.json(animal)
-    } else {
-      res.writeHead(400)
-      res.end()
-    }
-  })
+  request
+    .post(`${API_HOST}/animals`)
+    .set('Content-Type', 'application/json; charset=utf-8')
+    .send(animal)
+    .end((res) => {
+      console.log("Response: ", res)
+      if (res.status === 200) {
+        res.json(animal)
+      } else {
+        res.writeHead(400)
+        res.end()
+      }
+    })
 })
 
 module.exports = {

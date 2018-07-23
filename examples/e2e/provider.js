@@ -57,6 +57,9 @@ server.get('/animals/:id', (req, res) => {
 // Register a new Animal for the service
 server.post('/animals', (req, res) => {
   const animal = req.body
+  console.log("-------> POST body: ")
+  console.log(animal)
+  console.log("<-------")
 
   // Really basic validation
   if (!animal || !animal.first_name) {
@@ -69,8 +72,7 @@ server.post('/animals', (req, res) => {
   animal.id = animalRepository.fetchAll().length
   animalRepository.insert(animal)
 
-  res.writeHead(200)
-  res.end()
+  res.json(animal)
 })
 
 module.exports = {
